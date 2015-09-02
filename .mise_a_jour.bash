@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo " ---- Veuillez attendre une dizaine de secondes que la mise a jour se fasse ----"
+echo " -+-+- Veuillez attendre une dizaine de secondes que la mise a jour se fasse -+-+-"
 
 cd ~/Code/pySpriteWorld
 git fetch origin
