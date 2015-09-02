@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "mise a jour terminee"
+sleep 1
