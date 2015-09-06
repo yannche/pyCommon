@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd
+rm  Bureau/premiers\ pas\ en\ python.py
+
 sleep 0.2
 echo " -+-+- mise a jour terminee -+-+-"
 sleep 1.5
