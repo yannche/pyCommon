@@ -4,8 +4,8 @@ cd
 rm -f Bureau/premiers\ pas\ en\ python.py
 
 
-if [ ! -f /home/personne/Bureau/PremierProgrammePython.py ]; then
-    echo "le fichier n existe pas"
+if [ ! -f /home/personne/Bureau/PetitCodePython.py ]; then
+    cp /home/personne/Code/pyCommon/PetitCodePython.py /home/personne/Bureau/PetitCodePython.py
 fi
 
 sleep 0.2
