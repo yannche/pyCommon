@@ -3,6 +3,11 @@
 cd
 rm -f Bureau/premiers\ pas\ en\ python.py
 
+
+if [ ! -f /home/personne/Bureau/PremierProgrammePython.py ]; then
+    echo "le fichier n existe pas"
+fi
+
 sleep 0.2
 echo " -+-+- mise a jour terminee -+-+-"
 sleep 1.5
