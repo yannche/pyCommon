@@ -8,6 +8,12 @@ if [ ! -f /home/personne/Bureau/PetitCodePython.py ]; then
     cp /home/personne/Code/pyCommon/PetitCodePython.py /home/personne/Bureau/PetitCodePython.py
 fi
 
+if [ ! -f /usr/bin/aseba ]
+then
+    echo "-+- Utiliser le mot de passe de l'utilisateur personne -+-" 
+    sudo ~/Code/pyCommon/.install_aseba
+fi
+
 sleep 0.2
 echo " -+-+- mise a jour terminee -+-+-"
 sleep 1.5

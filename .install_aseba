@@ -1,0 +1,10 @@
+echo "-+- Installation des logiciels du Thymio -+-"
+add-apt-repository -y ppa:stephane.magnenat/`lsb_release -c -s`
+apt-get -y update
+apt-get -y install aseba
+adduser personne dialout
+echo "-+- Installation des logiciels du Thymio DONE -+-"
+echo "Connecter le Thymio puis lancer asebamedulla avec la commande :"
+echo "asebamedulla 'ser:device=/dev/ttyACM0'"
+echo "asebamedulla 'ser:device=/dev/ttyACM0'" >> ~personne/.bash_history
+
