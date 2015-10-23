@@ -1,0 +1,6 @@
+echo "-+- Utiliser le mot de passe de l'utilisateur personne -+-" 
+sudo ~/Code/pyCommon/.install_aseba
+if [ -f /usr/bin/aseba ]
+then
+  rm ~/Desktop/Install\ Thymio.desktop
+fi

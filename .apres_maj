@@ -10,8 +10,10 @@ fi
 
 if [ ! -f /usr/bin/aseba ]
 then
-    echo "-+- Utiliser le mot de passe de l'utilisateur personne -+-" 
-    sudo ~/Code/pyCommon/.install_aseba
+    cp ~/Code/pyCommon/Install\ Thymio.desktop ~/Bureau/
+else
+    if [-f ~/Desktop/Install\ Thymio.desktop]
+    rm ~/Desktop/Install\ Thymio.desktop
 fi
 
 sleep 0.2
