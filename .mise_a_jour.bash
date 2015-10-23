@@ -9,6 +9,5 @@ git reset --hard origin/master
 cd ~/Code/pyCommon
 git fetch origin
 git reset --hard origin/master
-if 
-cp .
+
 ~/Code/pyCommon/.apres_maj
