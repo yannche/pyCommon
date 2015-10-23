@@ -13,7 +13,9 @@ then
     cp ~/Code/pyCommon/Install\ Thymio.desktop ~/Bureau/
 else
     if [-f ~/Desktop/Install\ Thymio.desktop]
-    rm ~/Desktop/Install\ Thymio.desktop
+    then
+           rm ~/Desktop/Install\ Thymio.desktop
+    fi
 fi
 
 sleep 0.2
