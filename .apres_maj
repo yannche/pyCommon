@@ -12,9 +12,9 @@ if [ ! -f /usr/bin/asebamedulla ]
 then
     cp ~/Code/pyCommon/Install\ Thymio.desktop ~/Bureau/
 else
-    if [-f ~/Desktop/Install\ Thymio.desktop]
+    if [ -f ~/Bureau/Install\ Thymio.desktop ]
     then
-           rm ~/Desktop/Install\ Thymio.desktop
+           rm ~/Bureau/Install\ Thymio.desktop
     fi
 fi
 
