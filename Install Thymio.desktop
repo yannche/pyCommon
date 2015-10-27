@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Thymio installation
+Comment=installe aseba etc.
+Exec=/home/personne/Code/pyCommon/.sudo_install_aseba
+Icon=system-software-install
+Path=/home/personne
+Terminal=true
+StartupNotify=false

@@ -1,0 +1,8 @@
+echo "-+- Installation des logiciels du Thymio -+-"
+add-apt-repository -y ppa:stephane.magnenat/`lsb_release -c -s`
+apt-get -y update
+apt-get -y install aseba
+adduser personne dialout
+echo "asebamedulla 'ser:device=/dev/ttyACM0'" >> ~personne/.bash_history
+zenity --info --text="La connexion avec le Thymio sera disponible à la prochaine session. La commande assurant la connexion est :  asebamedulla 'ser:device=/dev/ttyACM0'. Cette commande a été ajoutée à votre historique. Pour en profiter dès maintenant vous pouvez fermer la session et relancer une nouvelle session, puis connecter le Thymio en usb et enfin, dans un terminal, rappeler la commande ci-dessus avec la flèche haut du clavier."
+echo "-+- Installation des logiciels du Thymio DONE -+-"

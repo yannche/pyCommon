@@ -8,6 +8,16 @@ if [ ! -f /home/personne/Bureau/PetitCodePython.py ]; then
     cp /home/personne/Code/pyCommon/PetitCodePython.py /home/personne/Bureau/PetitCodePython.py
 fi
 
+if [ ! -f /usr/bin/asebamedulla ]
+then
+    cp ~/Code/pyCommon/Install\ Thymio.desktop ~/Bureau/
+else
+    if [ -f ~/Bureau/Install\ Thymio.desktop ]
+    then
+           rm ~/Bureau/Install\ Thymio.desktop
+    fi
+fi
+
 sleep 0.2
 echo " -+-+- mise a jour terminee -+-+-"
 sleep 1.5
