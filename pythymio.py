@@ -53,7 +53,10 @@ class thymio(object):
             #...forward some local events as outgoing global ones
             for evt in SelectedEvents:
                 aesl.write('onevent ' + evt + "\n")
-                aesl.write ('    emit fwd.'+ evt + "[" + ",".join(ThymioEvents[evt]) + "]\n")
+                if len(ThymioEvents[evt]) > 0:
+                    aesl.write ('    emit fwd.'+ evt + "[" + ",".join(ThymioEvents[evt]) + "]\n")
+                else:
+                    aesl.write ('    emit fwd.'+ evt + "\n")
             # add code to handle custom events
             for (evt, code) in CustomEvents:
                 aesl.write('onevent ' + evt + " "+ code +"\n")
