@@ -51,12 +51,14 @@ class thymio(object):
                 aesl.write('<event size="0" name="'+ evt +'"/>\n')
             aesl.write('<node nodeId="1" name="'+node+'">\n')
             #...forward some local events as outgoing global ones
+            if 'prox.comm' in SelectedEvents:
+                aesl.write('prox.comm.enable(1)')
             for evt in SelectedEvents:
                 aesl.write('onevent ' + evt + "\n")
+                args = ""
                 if len(ThymioEvents[evt]) > 0:
-                    aesl.write ('    emit fwd.'+ evt + "[" + ",".join(ThymioEvents[evt]) + "]\n")
-                else:
-                    aesl.write ('    emit fwd.'+ evt + "\n")
+                    args = "[" + ",".join(ThymioEvents[evt]) + "]"
+                aesl.write ('    emit fwd.'+ evt + args + "\n")
             # add code to handle custom events
             for (evt, code) in CustomEvents:
                 aesl.write('onevent ' + evt + " "+ code +"\n")
@@ -209,4 +211,4 @@ def customEvents(*themes):
           ('sound.good', 'call sound.system(6)')]
         )
     ])
-    return [e for x in themes for e in d[x]]
+    return {e for x in themes for e in d[x]}
