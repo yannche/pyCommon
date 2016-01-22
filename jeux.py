@@ -25,7 +25,7 @@ class Jeu:
     def play(self,player1,player2,niterations=100,verb=False):
         self.sumJ1,self.sumJ2 = 0.0,0.0
         p1 = player1(self.mat1,self.mat2)
-        p2 = player2(self.mat2,self.mat1)
+        p2 = player2(self.mat2.T,self.mat1.T)
         a1 = next(p1)
         a2 = next(p2)
         try:
@@ -100,12 +100,12 @@ def my_dummycopy(mat1,mat2):
     while True:
         a,g1,g2 = yield a
 
-def test():
+def jeux__test():
     for i in range(20): print '\n'
     matching_pennies.play(my_biased_player,my_fictitious,100,verb=True)
     print "\n\n"
     random_zerosum_game.multiple_plays(my_rand_player,my_rand_player,niterations=100,nplays=2,verb=True)
 
 if __name__ == '__main__':
-    test()
+    jeux__test()
     pass
