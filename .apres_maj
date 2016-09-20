@@ -3,11 +3,6 @@
 cd
 rm -f Bureau/premiers\ pas\ en\ python.py
 
-
-if [ ! -f /home/personne/Bureau/PetitCodePython.py ]; then
-    cp /home/personne/Code/pyCommon/PetitCodePython.py /home/personne/Bureau/PetitCodePython.py
-fi
-
 if [ ! -f /usr/bin/asebamedulla ]
 then
     cp ~/Code/pyCommon/Install\ Thymio.desktop ~/Bureau/
