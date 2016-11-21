@@ -3,59 +3,55 @@ import pythymio2
 import time
 
 
-def affiche_dix_evennements():
+def affiche_dix_evennements(evennement):
+    for i in range(10):
+        while True:
+            ev = evennement("fwd.prox",(yield))
+            if ev is not None:
+                break
+
+        print "=>",ev
     
-    def monmain(evennement):
-        for i in range(10):
-            ev = evennement("fwd.prox.horizontal",(yield))
-            print "=>",ev
-    
-    pythymio2.call(monmain)
+#pythymio2.call(affiche_dix_evennements)
     
 
 #######################################################
 
 
 
-def Attend_appuie_touche_et_stop():
-    def monmain(evennement):
-        while True:
-            if evennement("fwd.button.center",(yield)):
-                break
+def Attend_appuie_touche_et_stop(evennement):
+    while True:
+        if evennement("fwd.button.center",(yield)):
+            break
 
-    pythymio2.call(monmain)
+#pythymio2.call(Attend_appuie_touche_et_stop)
 
 
 #######################################################
 
 
-def Affiche_prox_horizontals():
-    def monmain(evennement):
-        while True:
-            p = evennement("fwd.prox",(yield))
-            if p is not None:
-                print p[:7]
-            if evennement("fwd.button.center"):
-                print "fini!"
-                break
+def Affiche_prox_horizontals(evennement):
+    while True:
+        p = evennement("fwd.prox",(yield))
+        if p is not None:
+            print p[:7]
+        if evennement("fwd.button.center"):
+            print "fini!"
+            break
 
-    pythymio2.call(monmain)
+#pythymio2.call(Affiche_prox_horizontals)
 
-#Affiche_prox_horizontals()
 #######################################################
 
 
-def JeFonceEtJarrettePresDuMur():
-    def monmain(evennement):
-        pythymio2.av()
-        while True:
-            p = evennement("fwd.prox",(yield))
-            
-            if p is not None and p[2] > 1000:
-                pythymio2.arrete()
-                print 'fin'
-                break
+def JeFonceEtJarrettePresDuMur(evennement):
+    pythymio2.av()
+    while True:
+        p = evennement("fwd.prox",(yield))
+        
+        if p is not None and p[2] > 1000:
+            pythymio2.arrete()
+            print 'fin'
+            break
 
-    pythymio2.call(monmain)
-
-JeFonceEtJarrettePresDuMur()
+#pythymio2.call(JeFonceEtJarrettePresDuMur)
