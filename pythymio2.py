@@ -39,12 +39,14 @@ class EventQueue:
             return self.d[fname].popleft()
 
 
-global_Thym=None
 
-def call(func):
-    with pythymio.thymio(["prox","button.center"],[]) as Thym:
-        global global_Thym
-        global_Thym=Thym
+def call(func,eventlist=None):
+
+    if eventlist is None:
+        eventlist = ["prox","button.center"]
+
+    with pythymio.thymio(eventlist,[]) as Thym:
+        call.Thym=Thym
         monmain_generator = func( EventQueue() )
         monmain_generator.send(None)
         def dispatch(evtid, evt_name, evt_args):
@@ -58,8 +60,8 @@ def call(func):
 #### Moteurs ####
 
 def av(l=500,r=500):
-    global_Thym.set('motor.left.target', [l])
-    global_Thym.set('motor.right.target', [r])
+    call.Thym.set('motor.left.target', [l])
+    call.Thym.set('motor.right.target', [r])
 
 def td():
     av(500,-500)
