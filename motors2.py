@@ -9,11 +9,13 @@ with pythymio2.thymio(["buttons","motor","prox"],[]) as Thym:
         global temps,cnt
 
         cnt +=1
-        if cnt > 2000:
+        if cnt == 1:
+            pythymio2.tg(Thym)
+
+        if cnt > 200:
             pythymio2.arrete(Thym)
             Thym.stop()
 
-        pythymio2.tg(Thym)
         if evt_name == 'fwd.prox' and time.time() > temps + 0.1:
             temps = time.time()
             print(evt_name,evt_args)
