@@ -1,34 +1,73 @@
-from pythymio import *
-import time
+import pythymio
+from collections import deque
 
-def av(Thym,l=500,r=500):
-    Thym.set('motor.left.target', [l])
-    Thym.set('motor.right.target', [r])
 
-def td(Thym):
-    av(Thym,500,-500)
-    
-def tg(Thym):
-    av(Thym,-500,500)
 
-def arrete(Thym):
-    av(Thym,0,0)
-    
+#### Evennements ####
 
-"""
-class Temps:
+
+
+class EventQueue:
     def __init__(self):
-        self.reset()
+        self.d = dict()
 
-    def reset(self):
-        self.t = time.time()
+    def __call__(self,fname,ev_name_arg=None):
+        """
+        s'utilise comme ca:
+        data = evQueue("prox",yield)
+        """
+        if ev_name_arg is not None:
 
-    def reveille(self,secondes):
-        " devient TRUE au bout de "secondes" secondes "
-        assert self.t is not None,"appeler reset() sur l'objet Temps apres utilisation"
-        if time.time() - self.t > secondes:
-            self.t = None
-            return True
+            ev_name,ev_arg = ev_name_arg
+    
+            # traitement sur le format des arguments
+            ev_arg = list(map(float,ev_arg))
+            if ev_name == "fwd.button.center":
+                if ev_arg == []:
+                    ev_arg = True
+    
+            # empilage
+            if ev_name not in self.d:
+                self.d[ev_name] = deque(maxlen=1000)
+            self.d[ev_name].append( ev_arg )
+
+        if fname not in self.d:
+            self.d[fname] = deque(maxlen=1000)
+        if len(self.d[fname]) == 0:
+            return None
         else:
-            return False
-"""
+            return self.d[fname].popleft()
+
+
+global_Thym=None
+
+def call(func):
+    with pythymio.thymio(["prox","button.center"],[]) as Thym:
+        global global_Thym
+        global_Thym=Thym
+        monmain_generator = func( EventQueue() )
+        monmain_generator.send(None)
+        def dispatch(evtid, evt_name, evt_args):
+            try:
+                monmain_generator.send((evt_name,evt_args))
+            except StopIteration:
+                Thym.stop()
+
+        Thym.loop(dispatch)
+
+#### Moteurs ####
+
+def av(l=500,r=500):
+    global_Thym.set('motor.left.target', [l])
+    global_Thym.set('motor.right.target', [r])
+
+def td():
+    av(500,-500)
+    
+def tg():
+    av(-500,500)
+
+def arrete():
+    av(0,0)
+    
+
