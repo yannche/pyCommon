@@ -42,13 +42,13 @@ class EventQueue:
 
 def affiche_evennements():
     ev = yield "n3"
-    print "n3 =>",ev
+    print "J'ai recu n3 =>",ev
     ev = yield "n1"
-    print "n1 =>",ev
+    print "J'ai recu n1 =>",ev
     ev = yield "n8"
-    print "n8 =>",ev
+    print "J'ai recu n8 =>",ev
     ev = yield "n12"
-    print "n12 =>",ev
+    print "J'ai recu n12 =>",ev
     print 'fin de ma fonction affiche_evennements'
 
 
@@ -57,14 +57,18 @@ def thymio_eventloop_simulator():
     queueLoopGenerator = eq.queueLoop(affiche_evennements)
     queueLoopGenerator.next()
 
-    for i in range(20):
+    def progression(evname,evarg):
         try:
-            print "creation de l'evennement name=n"+str(i),", arg="+str([str(i)])
-            queueLoopGenerator.send(('n'+str(i),[str(i)]))
+            queueLoopGenerator.send((evname,evarg))
         except StopIteration:
-            break
+            print "end of event loop successfully reached"
+            quit()
 
-    print "end of event loop successfully reached"
+    def ThymLoop():
+        for i in range(20):
+            print "creation de l'evennement name=n"+str(i),", arg="+str([str(i)])
+            progression('n'+str(i),[str(i)])
 
+    ThymLoop()
 
 thymio_eventloop_simulator()
