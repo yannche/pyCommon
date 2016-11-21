@@ -9,6 +9,7 @@ node = "thymio-II"
 
 ThymioVariables = ["event.args", "button.backward", "button.left", "button.center", "button.forward", "button.right", "prox.horizontal", "prox.comm.rx", "prox.comm.tx", "prox.ground.ambiant", "prox.ground.reflected", "prox.ground.delta", "motor.left.target", "motor.right.target", "motor.left.speed", "motor.right.speed", "motor.left.pwm", "motor.right.pwm", "acc", "temperature", "rc5.address", "rc5.command", "mic.intensity", "mic.threshold", "timer.period"]
 
+# j'ai ajoute prox.horizontal (yc)
 
 ThymioEvents = dict([("button.backward", []),
                 ("button.left", []),
