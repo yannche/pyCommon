@@ -1,67 +1,109 @@
+from collections import deque,defaultdict
+from functools   import partial
+import time
 import pythymio
-from collections import deque
-
-
-
-#### Evennements ####
-
 
 
 class EventQueue:
     def __init__(self):
-        self.d = dict()
+        self.d = defaultdict( partial(deque,maxlen=1000) )
 
-    def __call__(self,fname,ev_name_arg=None):
+    def _parse_sleep_request(self,s):
+        """ if str = "sleep 1.5", it returns 1.5
+            if not a sleep request, returns False
         """
-        s'utilise comme ca:
-        data = evQueue("prox",yield)
+        try:
+            s1,s2 = s.split(' ')
+            assert s1 == 'sleep'
+            return float(s2)
+        except:
+            return False
+    
+    
+    def push(self,name,arg):
+        """ push event on eventqueue
         """
-        if ev_name_arg is not None:
-
-            ev_name,ev_arg = ev_name_arg
-    
-            # traitement sur le format des arguments
-            ev_arg = list(map(float,ev_arg))
-            if ev_name == "fwd.button.center":
-                if ev_arg == []:
-                    ev_arg = True
-    
-            # empilage
-            if ev_name not in self.d:
-                self.d[ev_name] = deque(maxlen=1000)
-            self.d[ev_name].append( ev_arg )
-
-        if fname not in self.d:
-            self.d[fname] = deque(maxlen=1000)
-        if len(self.d[fname]) == 0:
-            return None
-        else:
-            return self.d[fname].popleft()
+        # traitement sur le format des arguments
+        arg = list(map(float,arg))
+        if name == "fwd.button.center" and arg == []:
+            arg = True
+        self.d[name].append( arg )
 
 
+    def isEmpty(self,name):
+        """ returns True if eventqueue named "name" is empty
+        """
+        return len(self.d[name])==0
 
-def call(func,eventlist=None):
+
+    def pop(self,name):
+        return self.d[name].popleft()
+
+
+    def queueLoop(self,user_fun):
+        userAgent        = user_fun()
+        answerSentToUser = None  # initially, nothing sent to user
+        try:
+            while True:
+                # send answer to previous request and get new request
+                userRequest = userAgent.send( answerSentToUser )
+
+                # is it a sleep request of the form sleep x ?
+                sleepReq = self._parse_sleep_request(userRequest)    
+
+                if sleepReq:
+                    t0 = time.time()
+                    while time.time() < t0+sleepReq:
+                        # ask thymio for event, and push in queue
+                        n,a = yield
+                        n=n.replace('fwd.','')
+                        self.push(n,a)
+                    answerSentToUser = None
+                else:
+                    # while no event in queue matches the user's request, or while the sleep request has not ended           
+                    while self.isEmpty(userRequest):
+                        # ask thymio for event, and push in queue
+                        n,a = yield
+                        n=n.replace('fwd.','')
+                        self.push(n,a)
+
+                    # send the requested event to user and get next request
+                    answerSentToUser = self.pop(userRequest)
+
+
+        except StopIteration:
+            pass
+
+
+
+
+
+def runThymioControl(userFun,eventlist=None):
+    eq = EventQueue()
+    queueLoopGenerator = eq.queueLoop(userFun)
+    queueLoopGenerator.next()
 
     if eventlist is None:
-        eventlist = ["prox","button.center"]
+        eventlist = ["prox","buttons"]
 
     with pythymio.thymio(eventlist,[]) as Thym:
-        call.Thym=Thym
-        monmain_generator = func( EventQueue() )
-        monmain_generator.send(None)
+
+        runThymioControl.Thym=Thym
+
         def dispatch(evtid, evt_name, evt_args):
             try:
-                monmain_generator.send((evt_name,evt_args))
+                queueLoopGenerator.send((evt_name,evt_args))
             except StopIteration:
                 Thym.stop()
 
         Thym.loop(dispatch)
 
+
 #### Moteurs ####
 
 def av(l=500,r=500):
-    call.Thym.set('motor.left.target', [l])
-    call.Thym.set('motor.right.target', [r])
+    runThymioControl.Thym.set('motor.left.target', [l])
+    runThymioControl.Thym.set('motor.right.target', [r])
 
 def td():
     av(500,-500)
