@@ -28,26 +28,3 @@ runThymioControl(monCodeTest)
 
 
 
-### evitement d'obstacle ###
-def eviteObstacles():
-    yield "sleep 1"
-    av()
-    for i in range(100):
-
-        x = yield "prox"
-        print x
-        if x[0] > 1000 or x[4] > 1000:
-            if x[0] > x[1]:
-                td()
-                yield "sleep 0.2"
-            else:
-                tg()
-                yield "sleep 0.2"
-        else:
-                av()
-                yield "sleep 0.2"          
-    arrete()
-
-
-
-#runThymioControl(eviteObstacles)
