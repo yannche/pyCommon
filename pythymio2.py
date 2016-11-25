@@ -6,7 +6,7 @@ import pythymio
 
 class EventQueue:
     def __init__(self):
-        self.d = defaultdict( partial(deque,maxlen=1000) )
+        self.d = defaultdict( partial(deque,maxlen=1) )
 
     def _parse_sleep_request(self,s):
         """ if str = "sleep 1.5", it returns 1.5
