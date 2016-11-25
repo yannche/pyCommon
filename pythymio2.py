@@ -80,8 +80,6 @@ class EventQueue:
 
 def runThymioControl(userFun,eventlist=None):
     eq = EventQueue()
-    queueLoopGenerator = eq.queueLoop(userFun)
-    queueLoopGenerator.next()
 
     if eventlist is None:
         eventlist = ["prox","buttons"]
@@ -89,6 +87,8 @@ def runThymioControl(userFun,eventlist=None):
     with pythymio.thymio(eventlist,[]) as Thym:
 
         runThymioControl.Thym=Thym
+        queueLoopGenerator = eq.queueLoop(userFun)
+        queueLoopGenerator.next()
 
         def dispatch(evtid, evt_name, evt_args):
             try:
