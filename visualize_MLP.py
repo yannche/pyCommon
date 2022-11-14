@@ -5,9 +5,9 @@ def Relu(a):
     return (a>0)*a
 
 def visualize(X,Y,W,V=None):
-    fig,ax = plt.subplots()
     y = np.argmax(Y,axis=1)
-    ax.scatter(*X[:,:2].T,c=y)
+    plt.scatter(*X[:,:2].T,c=y)
+    ax = plt.gca()
     
     #ax.axis('tight')
     #ax.axis('off')
