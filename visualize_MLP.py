@@ -20,7 +20,7 @@ def visualize(X,Y,W,V=None):
     _x = np.c_[xx.ravel(), yy.ravel(),np.ones_like(xx).ravel()].T
     _a = W @ _x
     if V is None:
-        _z = a
+        _z = _a
     else:
         _z = V @ Relu(_a)
 
