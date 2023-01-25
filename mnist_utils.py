@@ -43,7 +43,7 @@ def visualize_pytorch_classifier(X, y, predict=None,**kwargs):
 
         ax.set(xlim=xlim, ylim=ylim)
 
-        if kwargs['return_arrays']: return xx,yy,Z
+        if 'return_arrays' in kwargs: return xx,yy,Z
 
         
 
