@@ -31,7 +31,7 @@ def visualize_pytorch_classifier(X, y, predict=None,**kwargs):
         xx, yy = np.meshgrid(np.linspace(*xlim, num=200),
                              np.linspace(*ylim, num=200))
         xxyy   = np.c_[xx.ravel(), yy.ravel()]
-        Z      = np.array([predict((torch.from_numpy(d)).float(),**kwargs).data.numpy()
+        Z      = np.array([predict((torch.from_numpy(d)).float()).data.numpy()
                            for d in xxyy]).reshape(xx.shape)
 
         # Create a color plot with the results
